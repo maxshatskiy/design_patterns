@@ -1,3 +1,7 @@
+class Empty(Exception):
+    def __init__(self, message):
+        super().__init__(self.message)
+
 class ArrayStack:
     """LIFO Stack implementation using a Python list as underlying storage.
     Example of adapter design pattern."""
@@ -33,4 +37,17 @@ class ArrayStack:
     if self.is_empty():
         raise Empty('Stack is empty')
     return self._data.pop()
+
+def reverse_file(filename):
+    """Overwrite given file with its contents line-by-line reversed. Stacks is used."""
+    S = ArrayStack()
+    original = open(filename)
+    for line in original:
+        S.push(line.rstrip('\n')) # re-inreset newlines when wrinting
+    original.close()
+
+    output = open(filename,'w')
+    while not S.is_empty():
+        output.write(S.pop()+'\n')
+    output.close()
 
